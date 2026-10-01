@@ -1061,7 +1061,10 @@ void ftLib_LoadKirbyHats(u8 arg0)
     }
 }
 
-void ftLib_IsFramesRemaining(HSD_GObj* gobj)
+/* PORT: returns its result, as its caller (gm_1798.c) reads it; declared
+ * void, the value only reached the caller by luck of the native calling
+ * convention, and a mismatched prototype traps in wasm32. */
+s32 ftLib_IsFramesRemaining(HSD_GObj* gobj)
 {
     return ftAnim_IsFramesRemaining(gobj);
 }

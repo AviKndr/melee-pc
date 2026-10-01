@@ -137,7 +137,10 @@ void lbFile_800164A4(int file, uintptr_t dst, size_t* size, int pri,
 {
     int type;
     *size = lbFile_8001634C(file);
-    type = (dst >= 0x80000000) ? 0x21 : 0x23;
+    /* PORT: MEM1 is not at 0x80000000 on a host; ARAM is the low 16 MB
+     * (PC_IS_ARAM_ADDR). The GameCube test only works natively because MEM1
+     * happens to map above 0x80000000 there, and fails in wasm32. */
+    type = !PC_IS_ARAM_ADDR(dst) ? 0x21 : 0x23;
     HSD_DevComRequest(file, 0, dst, OSRoundUp32B(*size), type, pri, callback,
                       args);
 }
