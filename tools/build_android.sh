@@ -91,7 +91,7 @@ if [[ ! -f "${KEYSTORE}" && "${MELEE_THROWAWAY_KEY:-}" == 1 ]]; then
         -alias "${MELEE_KEY_ALIAS}" -keyalg RSA -keysize 2048 -validity 30 \
         -storepass "${MELEE_KEYSTORE_PASSWORD}" -keypass "${MELEE_KEY_PASSWORD}" \
         -dname "CN=Melee throwaway build key" > /dev/null
-    export MELEE_KEYSTORE_FILE="${KEYSTORE}"
+    export MELEE_KEYSTORE_FILE="$(realpath "${KEYSTORE}")"
     echo "warning: no release key; signing with a throwaway key" >&2
 fi
 if [[ ! -f "${KEYSTORE}" ]]; then
